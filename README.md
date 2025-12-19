@@ -1,1 +1,0 @@
-# Funnywai.github.io
