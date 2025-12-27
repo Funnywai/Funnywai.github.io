@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>港台麻將即時計分系統</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 頂部標題區 -->
+        <header class="header">
+            <h1><i class="fas fa-dice"></i> 港台麻將即時計分系統</h1>
+            <p class="subtitle">即時計算分數，累積戰績</p>
+        </header>
+
+        <!-- 主內容區 -->
+        <main class="main-content">
+            <!-- 左側：輸入區 -->
+            <section class="input-section">
+                <!-- 玩家資訊輸入 -->
+                <div class="player-inputs-section">
+                    <h2><i class="fas fa-users"></i> 玩家設定</h2>
+                    <div class="player-inputs">
+                        <div class="player-input">
+                            <label for="player1">玩家一</label>
+                            <input type="text" id="player1" placeholder="輸入玩家名稱" class="player-name">
+                        </div>
+                        <div class="player-input">
+                            <label for="player2">玩家二</label>
+                            <input type="text" id="player2" placeholder="輸入玩家名稱" class="player-name">
+                        </div>
+                        <div class="player-input">
+                            <label for="player3">玩家三</label>
+                            <input type="text" id="player3" placeholder="輸入玩家名稱" class="player-name">
+                        </div>
+                        <div class="player-input">
+                            <label for="player4">玩家四</label>
+                            <input type="text" id="player4" placeholder="輸入玩家名稱" class="player-name">
+                        </div>
+                    </div>
+                    <div class="player-save-section">
+                        <button id="save-players-btn" class="btn save-players-btn">
+                            <i class="fas fa-save"></i> 儲存玩家名稱
+                        </button>
+                        <p class="save-note">*玩家名稱會永久儲存，即使重新整理頁面也不會消失</p>
+                    </div>
+                </div>
+                
+                <!-- 番數設定 -->
+                <div class="score-input-section">
+                    <h2><i class="fas fa-calculator"></i> 番數設定</h2>
+                    <div class="score-input-container">
+                        <label for="score-input">本次胡牌番數</label>
+                        <div class="score-input-wrapper">
+                            <button class="score-btn minus-btn" id="decrease-score">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" id="score-input" value="1" min="1" max="100">
+                            <button class="score-btn plus-btn" id="increase-score">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="score-slider-container">
+                            <input type="range" id="score-slider" min="1" max="100" value="1" class="score-slider">
+                            <div class="slider-ticks">
+                                <span>1</span>
+                                <span>10</span>
+                                <span>20</span>
+                                <span>30</span>
+                                <span>50</span>
+                                <span>100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 胡牌設定 -->
+                <div class="win-section">
+                    <h2><i class="fas fa-flag-checkered"></i> 胡牌設定</h2>
+                    <div class="win-type-selector">
+                        <div class="win-type-option" id="win-self-draw">
+                            <div class="option-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="option-content">
+                                <h3>自摸</h3>
+                                <p>胡牌玩家從其他三家各獲得 (番數) 分</p>
+                            </div>
+                            <div class="option-radio">
+                                <input type="radio" name="win-type" id="self-draw-radio" checked>
+                            </div>
+                        </div>
+                        
+                        <div class="win-type-option" id="win-ron">
+                            <div class="option-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="option-content">
+                                <h3>食胡</h3>
+                                <p>胡牌玩家從放槍玩家獲得 (番數 + 5) 分</p>
+                            </div>
+                            <div class="option-radio">
+                                <input type="radio" name="win-type" id="ron-radio">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 玩家選擇 -->
+                    <div class="player-selection">
+                        <div class="selection-group winner-selection">
+                            <h3>胡牌玩家</h3>
+                            <div class="player-options" id="winner-options">
+                                <!-- 將由 JavaScript 動態生成 -->
+                            </div>
+                        </div>
+                        
+                        <div class="selection-group loser-selection" id="loser-section">
+                            <h3>出銃玩家 <span class="note">(僅食胡時需要)</span></h3>
+                            <div class="player-options" id="loser-options">
+                                <!-- 將由 JavaScript 動態生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 動作按鈕 -->
+                <div class="action-buttons">
+                    <button id="win-btn" class="btn win-btn">
+                        <i class="fas fa-flag-checkered"></i> 胡牌
+                    </button>
+                    <button id="reset-scores-btn" class="btn reset-btn">
+                        <i class="fas fa-redo"></i> 重置分數
+                    </button>
+                </div>
+            </section>
+
+            <!-- 右側：即時分數區 -->
+            <section class="score-section">
+                <div class="score-header">
+                    <h2><i class="fas fa-chart-line"></i> 即時分數</h2>
+                    <div class="score-controls">
+                        <button id="reset-game-btn" class="btn btn-small">
+                            <i class="fas fa-trash"></i> 清除記錄
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 玩家分數顯示 -->
+                <div class="player-scores" id="player-scores">
+                    <!-- 將由 JavaScript 動態生成 -->
+                    <div class="empty-scores">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>尚未開始計分</p>
+                        <p class="sub-text">請先設定玩家名稱並開始胡牌</p>
+                    </div>
+                </div>
+                
+                <!-- 最近記錄 -->
+                <div class="recent-history">
+                    <h3><i class="fas fa-history"></i> 最近記錄</h3>
+                    <div class="history-list" id="history-list">
+                        <div class="empty-history">
+                            <i class="fas fa-clipboard-list"></i>
+                            <p>暫無記錄</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 統計數據 -->
+                <div class="statistics">
+                    <h3><i class="fas fa-chart-pie"></i> 統計數據</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">總胡牌數</span>
+                            <span class="stat-value" id="total-wins">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">最高番數</span>
+                            <span class="stat-value" id="highest-score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">自摸次數</span>
+                            <span class="stat-value" id="self-draw-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">食胡次數</span>
+                            <span class="stat-value" id="ron-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- 底部資訊 -->
+        <footer class="footer">
+            <p>分數將保存在瀏覽器本地儲存中 | 港式台灣麻將規則</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript 檔案 -->
+    <script src="script.js"></script>
+</body>
+</html>
