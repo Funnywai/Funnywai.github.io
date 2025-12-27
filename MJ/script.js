@@ -36,7 +36,6 @@ class MahjongScoreSystem {
     initializeElements() {
         // 取得 DOM 元素
         this.playerInputs = document.querySelectorAll('.player-name');
-        this.savePlayersBtn = document.getElementById('save-players-btn');
         
         // 分數控制
         this.scoreInput = document.getElementById('score-input');
@@ -73,8 +72,6 @@ class MahjongScoreSystem {
     }
 
     bindEvents() {
-        // 儲存玩家名稱按鈕
-        this.savePlayersBtn.addEventListener('click', () => this.savePlayers());
         
         // 分數控制事件
         this.scoreInput.addEventListener('input', (e) => {
