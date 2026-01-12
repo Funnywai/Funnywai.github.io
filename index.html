@@ -3,234 +3,514 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wai Profile</title>
+    <title>Kenny Xu | Software Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <!-- Header & Navigation -->
-    <header>
+    <header id="header">
         <div class="container nav-container">
-            <a href="#" class="logo">Profile<span>.</span></a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
+            <a href="#" class="logo">
+                <span class="logo-bracket">&lt;</span>Kenny<span class="logo-dot">.</span>Xu<span class="logo-bracket">/&gt;</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span class="hamburger"></span>
             </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#projects">Projects</a></li>
-            </ul>
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#stats" class="nav-link">Stats</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#footer" class="nav-link nav-cta">Contact</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with WebGL Background -->
     <section class="hero" id="home">
+        <canvas id="heroCanvas"></canvas>
+        <div class="hero-gradient"></div>
         <div class="container hero-content">
-            <h1>Xu Ka Wai Kenny</h1>
-            <p>I'm a motivated and personable Year 3 Student pursuing a bachelor's degree in Computer Science at the Chinese University of Hong Kong. I am familiar with programming in VBA, Python, C, Java, JavaScript, Node.js technologies.</p>
-            <div>
-                <a href="#projects" class="btn">View My Work</a>
-                <a href="#footer" class="btn btn-outline">Contact Me</a>
+            <div class="hero-badge" data-animate="fade-up">
+                <span class="badge-dot"></span>
+                Open to Opportunities
+            </div>
+            <h1 data-animate="fade-up" data-delay="100">
+                <span class="hero-greeting">Hello, I'm</span>
+                <span class="hero-name">Xu Ka Wai Kenny</span>
+            </h1>
+            <p class="hero-tagline" data-animate="fade-up" data-delay="200">
+                <span class="typewriter" id="typewriter"></span>
+                <span class="typewriter-cursor">|</span>
+            </p>
+            <p class="hero-description" data-animate="fade-up" data-delay="300">
+                Year 3 Computer Science student at CUHK, passionate about building 
+                innovative software solutions and exploring cutting-edge technologies.
+            </p>
+            <div class="hero-cta" data-animate="fade-up" data-delay="400">
+                <a href="#projects" class="btn btn-primary">
+                    <span>View My Work</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#footer" class="btn btn-secondary">
+                    <span>Get In Touch</span>
+                </a>
+            </div>
+            <div class="hero-scroll" data-animate="fade-up" data-delay="500">
+                <div class="scroll-indicator">
+                    <div class="scroll-dot"></div>
+                </div>
+                <span>Scroll to explore</span>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about">
+    <section id="about" class="section-dark">
         <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">Who I Am</span>
+                <h2 class="section-title">About Me</h2>
             </div>
-            <div class="about-content">
-                <div class="profile-img">
-                    <img src="" alt="">
-                </div>
-                <div class="about-text">
-                    <h3>Hello! I'm Xu Ka Wai Kenny</h3>
-                    <p>I am a passionate software developer dedicated to developing applications. My technical journey began with my computer science degree, and since then I have worked on various projects, including data visualization tools.</p>
-                    <p>I firmly believe in writing concise, maintainable code and following best practices. I am always eager to learn new technologies and solve challenging problems. In my spare time, I enjoy playing basketball, reading tech blogs, or participating in hobby projects.</p>
-                    <div class="skills">
-                        <span class="skill-tag">VBA</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Git</span>
+            <div class="about-grid">
+                <div class="about-image" data-animate="fade-right">
+                    <div class="image-frame">
+                        <div class="frame-border"></div>
+                        <div class="profile-placeholder">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
                     </div>
-                    <a href="CV.pdf" target="_blank" class="btn" style="margin-top: 30px;">Download CV</a>
+                </div>
+                <div class="about-content" data-animate="fade-left">
+                    <h3>Aspiring Software Engineer</h3>
+                    <p>I am a passionate software developer dedicated to building applications that make a difference. My technical journey began with my computer science degree at CUHK, and since then I have worked on various projects spanning web development, data visualization, and full-stack applications.</p>
+                    <p>I believe in writing clean, maintainable code and following best practices. I'm always eager to learn new technologies and solve challenging problems. When I'm not coding, you'll find me on the basketball court or exploring the latest tech innovations.</p>
+                    
+                    <div class="tech-stack">
+                        <h4>Tech Stack</h4>
+                        <div class="tech-badges">
+                            <div class="tech-badge" data-animate="pop" data-delay="0">
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="50">
+                                <i class="fab fa-java"></i>
+                                <span>Java</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="100">
+                                <i class="fab fa-js-square"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="150">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="200">
+                                <i class="fab fa-node-js"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="250">
+                                <i class="fas fa-database"></i>
+                                <span>MongoDB</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="300">
+                                <i class="fas fa-code"></i>
+                                <span>C</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="350">
+                                <i class="fab fa-git-alt"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="tech-badge" data-animate="pop" data-delay="400">
+                                <i class="fas fa-file-excel"></i>
+                                <span>VBA</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="CV.pdf" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        <span>Download CV</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section with Animated Counters -->
+    <section id="stats" class="section-gradient">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card" data-animate="fade-up" data-delay="0">
+                    <div class="stat-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-number" data-count="3.377">0</div>
+                    <div class="stat-label">CGPA</div>
+                    <div class="stat-bar">
+                        <div class="stat-bar-fill" data-percent="84"></div>
+                    </div>
+                </div>
+                <div class="stat-card" data-animate="fade-up" data-delay="100">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-number" data-count="3">0</div>
+                    <div class="stat-label">Years of Study</div>
+                    <div class="stat-progress">
+                        <span class="progress-dot active"></span>
+                        <span class="progress-dot active"></span>
+                        <span class="progress-dot active"></span>
+                        <span class="progress-dot"></span>
+                    </div>
+                </div>
+                <div class="stat-card" data-animate="fade-up" data-delay="200">
+                    <div class="stat-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="stat-number" data-count="3">0</div>
+                    <div class="stat-label">Projects Completed</div>
+                    <div class="stat-icons">
+                        <i class="fas fa-folder-open"></i>
+                        <i class="fas fa-folder-open"></i>
+                        <i class="fas fa-folder-open"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" style="background-color: #f5f7fa;">
+    <section id="experience">
         <div class="container">
-            <div class="section-title">
-                <h2>Internships & Activities</h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">My Journey</span>
+                <h2 class="section-title">Experience & Education</h2>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Feb 2023 - Mar 2023</span>
-                        <h3>Gotta GO! Sustainable Explorer Challenge, Hong Kong Express</h3>
-                        <p>Participant</p>
+            
+            <div class="experience-tabs">
+                <button class="tab-btn active" data-tab="education">
+                    <i class="fas fa-graduation-cap"></i>
+                    Education
+                </button>
+                <button class="tab-btn" data-tab="work">
+                    <i class="fas fa-briefcase"></i>
+                    Work
+                </button>
+            </div>
+
+            <div class="timeline-container">
+                <!-- Education Timeline -->
+                <div class="timeline active" id="education-timeline">
+                    <div class="timeline-track"></div>
+                    
+                    <div class="timeline-item" data-animate="fade-up">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-pulse"></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <span class="timeline-date">2023 - Present</span>
+                                <span class="timeline-status current">Current</span>
+                            </div>
+                            <h3>The Chinese University of Hong Kong</h3>
+                            <p class="timeline-subtitle">Bachelor of Science in Computer Science</p>
+                            <ul class="timeline-details">
+                                <li>Latest GPA: 3.319</li>
+                                <li>CGPA: 3.377</li>
+                                <li>Focus: Software Development & Data Science</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-animate="fade-up" data-delay="100">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <span class="timeline-date">2017 - 2023</span>
+                            </div>
+                            <h3>Chan Sui Ki (La Salle) College</h3>
+                            <p class="timeline-subtitle">Secondary Education</p>
+                            <ul class="timeline-details">
+                                <li>ICT DSE Result: 5**</li>
+                                <li>3 years of ICT studies</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">July 2025 - August 2025</span>
-                        <h3>Technical Support</h3>
-                        <p>Civil Aviation Department</p>
+
+                <!-- Work Timeline -->
+                <div class="timeline" id="work-timeline">
+                    <div class="timeline-track"></div>
+                    
+                    <div class="timeline-item" data-animate="fade-up">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-pulse"></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <span class="timeline-date">July - August 2025</span>
+                            </div>
+                            <h3>Technical Support Intern</h3>
+                            <p class="timeline-subtitle">Civil Aviation Department</p>
+                            <ul class="timeline-details">
+                                <li>Technical support and IT operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-animate="fade-up" data-delay="100">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <span class="timeline-date">Feb - Mar 2023</span>
+                            </div>
+                            <h3>Gotta GO! Sustainable Explorer Challenge</h3>
+                            <p class="timeline-subtitle">Hong Kong Express - Participant</p>
+                            <ul class="timeline-details">
+                                <li>Sustainability innovation challenge</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education">
+    <!-- Projects Section with Physics Carousel -->
+    <section id="projects" class="section-dark">
         <div class="container">
-            <div class="section-title">
-                <h2>Education</h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-tag">My Work</span>
+                <h2 class="section-title">Featured Projects</h2>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2017 - 2023</span>
-                        <h3>Chan Sui ki (La Salle) College</h3>
-                        <p>Three years of study in Information and Communication Technology and a Hong Kong Diploma of Secondary Education Examination result of 5**.</p>
+            
+            <div class="projects-carousel" id="projectsCarousel">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Project Card 1 -->
+                    <div class="project-card" data-index="0">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <img src="Picture/flack.png" alt="Voting Website">
+                                    <div class="project-overlay">
+                                        <span class="view-project">View Details</span>
+                                    </div>
+                                </div>
+                                <div class="project-content">
+                                    <h3>Voting Website</h3>
+                                    <p>Interactive voting platform with animated glow effects and real-time updates.</p>
+                                    <div class="project-tech">
+                                        <span>HTML</span>
+                                        <span>CSS</span>
+                                        <span>JavaScript</span>
+                                        <span>Firebase</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>Voting Website</h3>
+                                <p>A page with animated glow effects, password-protected voting, and mobile-responsive design for an engaging experience.</p>
+                                <div class="project-features">
+                                    <div class="feature">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Password Protected</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <span>Mobile Responsive</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-sync"></i>
+                                        <span>Real-time Updates</span>
+                                    </div>
+                                </div>
+                                <a href="/FLACK" class="btn btn-primary">
+                                    <span>View Project</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="project-card" data-index="1">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <img src="/Picture/MahJong.png" alt="MahJong Scoring">
+                                    <div class="project-overlay">
+                                        <span class="view-project">View Details</span>
+                                    </div>
+                                </div>
+                                <div class="project-content">
+                                    <h3>MahJong Scoring</h3>
+                                    <p>Digital scoreboard for tracking scores, wins, and game history.</p>
+                                    <div class="project-tech">
+                                        <span>Next.js</span>
+                                        <span>Vercel</span>
+                                        <span>React</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>MahJong Scoring Website</h3>
+                                <p>Digital Mahjong scoreboard to track scores, wins, and history, featuring dealer tracking and payout calculations.</p>
+                                <div class="project-features">
+                                    <div class="feature">
+                                        <i class="fas fa-calculator"></i>
+                                        <span>Auto Calculations</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-history"></i>
+                                        <span>Game History</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-users"></i>
+                                        <span>Multi-player</span>
+                                    </div>
+                                </div>
+                                <a href="https://mj-ashen-alpha.vercel.app/" target="_blank" class="btn btn-primary">
+                                    <span>View Project</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="project-card" data-index="2">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <img src="Picture/HKCulturalEvents.png" alt="HK Cultural Events">
+                                    <div class="project-overlay">
+                                        <span class="view-project">View Details</span>
+                                    </div>
+                                </div>
+                                <div class="project-content">
+                                    <h3>HK Cultural Events</h3>
+                                    <p>Real-time cultural events platform with Google Maps integration.</p>
+                                    <div class="project-tech">
+                                        <span>MongoDB</span>
+                                        <span>React</span>
+                                        <span>Express.js</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>Hong Kong Cultural Events</h3>
+                                <p>A website showcasing real-time cultural events in Hong Kong with Google Maps integration and interactive UI.</p>
+                                <div class="project-features">
+                                    <div class="feature">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Google Maps</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-database"></i>
+                                        <span>MongoDB Backend</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-sync-alt"></i>
+                                        <span>Real-time Data</span>
+                                    </div>
+                                </div>
+                                <a href="https://csci-2720-project-eight.vercel.app/" target="_blank" class="btn btn-primary">
+                                    <span>View Project</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2023 - Current</span>
-                        <h3>The Chinese University of Hong Kong</h3>
-                        <p>Bachelor in Computer Science</p>
-                        <p>Latest GPA: 3.319</p>
-                        <p>CGPA: 3.377</p>
+
+                <!-- Carousel Controls -->
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev" id="prevBtn" aria-label="Previous project">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots">
+                        <button class="dot active" data-index="0"></button>
+                        <button class="dot" data-index="1"></button>
+                        <button class="dot" data-index="2"></button>
                     </div>
+                    <button class="carousel-btn next" id="nextBtn" aria-label="Next project">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" style="background-color: #f5f7fa;">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Projects</h2>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="Picture/flack.png" style="width: 100%; height: 130%;">
-                    </div>
-                    <div class="project-info">
-                        <h3>Voting Website</h3>
-                        <p>A page with animated glow effects, password-protected voting, and mobile-responsive design for an engaging experience.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">FireBase RealTime DataBase</span>
-                        </div>
-                        <a href="/FLACK" class="btn">View Project</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="/Picture/MahJong.png" >
-                    </div>
-                    <div class="project-info">
-                        <h3>MahJong Scoring Website</h3>
-                        <p>This is a digital Mahjong scoreboard to track scores, wins, and history, featuring dealer tracking and payout calculations.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Vercel</span>
-                            <span class="project-tag">NextJs</span>
-                        </div>
-                        <a href="https://mj-ashen-alpha.vercel.app/" class="btn">View Project</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="Picture/HKCulturalEvents.png" >
-                    </div>
-                    <div class="project-info">
-                        <h3>Hong Kong Cultural Events Website</h3>
-                        <p>A website showcasing real time cultural events in Hong Kong with Goole Map</p>
-                        <div class="project-tags">
-                            <span class="project-tag">MongoDB</span>
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Express.js</span>
-                            <span class="project-tag">Vercel</span>
-                        </div>
-                        <a href="https://csci-2720-project-eight.vercel.app/" class="btn">View Project</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- Animated Footer -->
     <footer id="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <h3>Contact Information</h3>
-                    <div class="footer-contact">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4>Email</h4>
-                                <p>kawaixu1101@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>(+852) 52600195</p>
-                            </div>
-                        </div>
+        <canvas id="footerCanvas"></canvas>
+        <div class="container footer-container">
+            <div class="footer-main">
+                <div class="footer-brand" data-animate="fade-up">
+                    <a href="#" class="footer-logo">
+                        <span class="logo-bracket">&lt;</span>Kenny<span class="logo-dot">.</span>Xu<span class="logo-bracket">/&gt;</span>
+                    </a>
+                    <p>Building innovative solutions with clean code and creative thinking.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Funnywai" target="_blank" aria-label="GitHub" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/kawaixu/" target="_blank" aria-label="LinkedIn" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#education">Education</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                    </ul>
+                
+                <div class="footer-links" data-animate="fade-up" data-delay="100">
+                    <h4>Quick Links</h4>
+                    <nav>
+                        <a href="#home">Home</a>
+                        <a href="#about">About</a>
+                        <a href="#stats">Stats</a>
+                        <a href="#experience">Experience</a>
+                        <a href="#projects">Projects</a>
+                    </nav>
                 </div>
-                <div class="footer-social">
-                    <h3>Follow Me</h3>
-                    <div class="social-links">
-                        <a href="https://github.com/Funnywai" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/kawaixu/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                
+                <div class="footer-contact" data-animate="fade-up" data-delay="200">
+                    <h4>Get In Touch</h4>
+                    <div class="contact-items">
+                        <a href="mailto:kawaixu1101@gmail.com" class="contact-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>kawaixu1101@gmail.com</span>
+                        </a>
+                        <a href="tel:+85252600195" class="contact-link">
+                            <i class="fas fa-phone"></i>
+                            <span>(+852) 5260 0195</span>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2026 Xu Ka Wai Kenny. All rights reserved.</p>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2026 Xu Ka Wai Kenny. Crafted with <span class="heart">♥</span> and JavaScript.</p>
+                </div>
+                <div class="back-to-top">
+                    <button id="backToTop" aria-label="Back to top">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </footer>
