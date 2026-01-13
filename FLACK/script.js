@@ -1,120 +1,114 @@
-// Form submission feedback
+// FLACK Award 2025 - Voting Form Script
+
 const contactForm = document.getElementById('contact-form');
 const formMessage = document.getElementById('form-message');
 
 if (contactForm) {
     contactForm.addEventListener('submit', function(event) {
-        // Check if all required questions are answered
-        const requiredRadios = document.querySelectorAll('input[type="radio"][required]');
-        const questionGroups = {};
-        
-        // Group radio buttons by question
-        requiredRadios.forEach(radio => {
-            const questionName = radio.name;
-            if (!questionGroups[questionName]) {
-                questionGroups[questionName] = [];
-            }
-            questionGroups[questionName].push(radio);
-        });
-        
-        // Check each question has at least one radio selected
+        // Get all award cards
+        const awardCards = document.querySelectorAll('.award-card');
         let allAnswered = true;
-        Object.keys(questionGroups).forEach(questionName => {
-            const radios = questionGroups[questionName];
+        let firstUnanswered = null;
+        
+        // Check each award card for a selection
+        awardCards.forEach(card => {
+            const radios = card.querySelectorAll('input[type="radio"]');
             const isAnswered = Array.from(radios).some(radio => radio.checked);
+            
+            // Remove previous state classes
+            card.classList.remove('unanswered', 'answered');
             
             if (!isAnswered) {
                 allAnswered = false;
-                // Highlight unanswered question
-                const questionDiv = radios[0].closest('.question');
-                questionDiv.style.borderLeft = '4px solid #e53e3e';
-                questionDiv.style.background = '#fff5f5';
-                
-                // Add shake animation
-                questionDiv.classList.add('shake');
-                setTimeout(() => {
-                    questionDiv.classList.remove('shake');
-                }, 500);
+                card.classList.add('unanswered');
+                if (!firstUnanswered) {
+                    firstUnanswered = card;
+                }
+            } else {
+                card.classList.add('answered');
             }
         });
         
         if (!allAnswered) {
             event.preventDefault();
-            formMessage.textContent = 'Please answer all questions before submitting.';
+            
+            // Show error message
+            formMessage.textContent = 'Please select a candidate for each award before submitting.';
             formMessage.style.color = '#e53e3e';
             formMessage.style.background = '#fff5f5';
-            formMessage.style.border = '1px solid #e53e3e';
+            formMessage.style.border = '1px solid #fed7d7';
+            formMessage.style.display = 'block';
+            
+            // Scroll to first unanswered question
+            if (firstUnanswered) {
+                firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             return;
         }
         
         // If all answered, show success message
         formMessage.textContent = 'Submitting your votes...';
-        formMessage.style.color = '#3182ce';
+        formMessage.style.color = '#2b6cb0';
         formMessage.style.background = '#ebf8ff';
-        formMessage.style.border = '1px solid #3182ce';
+        formMessage.style.border = '1px solid #bee3f8';
+        formMessage.style.display = 'block';
         
-        // Create a summary of votes
+        // Collect votes for summary
+        const votes = [];
+        awardCards.forEach(card => {
+            const awardName = card.querySelector('.award-info h3').textContent;
+            const selectedRadio = card.querySelector('input[type="radio"]:checked');
+            if (selectedRadio) {
+                votes.push({ award: awardName, candidate: selectedRadio.value });
+            }
+        });
+        
+        // Show success message with summary after brief delay
         setTimeout(() => {
-            const votesSummary = Object.keys(questionGroups).map(questionName => {
-                const selectedRadio = Array.from(questionGroups[questionName]).find(radio => radio.checked);
-                return `${questionName}: ${selectedRadio.value.toUpperCase()}`;
-            }).join('<br>');
+            const voteSummary = votes.map(v => `<strong>${v.award}:</strong> ${v.candidate}`).join('<br>');
             
             formMessage.innerHTML = `
-                <strong>Thank you! Your votes have been submitted. 🎉</strong><br><br>
-                <strong>Your Votes:</strong><br>
-                ${votesSummary}
+                <div style="margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.5rem;">🎉</span>
+                    <strong> Thank you for voting!</strong>
+                </div>
+                <div style="text-align: left; display: inline-block; font-size: 0.9rem;">
+                    ${voteSummary}
+                </div>
             `;
-            formMessage.style.color = '#38a169';
+            formMessage.style.color = '#276749';
             formMessage.style.background = '#f0fff4';
-            formMessage.style.border = '1px solid #38a169';
+            formMessage.style.border = '1px solid #c6f6d5';
             
-            // Clear form after 3 seconds
+            // Reset form after delay
             setTimeout(() => {
                 contactForm.reset();
-                // Reset question styling
-                document.querySelectorAll('.question').forEach(question => {
-                    question.style.borderLeft = '';
-                    question.style.background = '';
+                awardCards.forEach(card => {
+                    card.classList.remove('answered');
+                    // Reset all candidate card styles
+                    card.querySelectorAll('.candidate-card').forEach(candidateCard => {
+                        candidateCard.style.borderColor = '';
+                        candidateCard.style.background = '';
+                    });
                 });
             }, 3000);
         }, 1500);
     });
-    
-    // Add CSS for shake animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        .shake {
-            animation: shake 0.3s ease-in-out;
-        }
-    `;
-    document.head.appendChild(style);
 }
 
-// Add visual feedback when selecting options
+// Add visual feedback when selecting candidates
 document.addEventListener('change', function(event) {
-    if (event.target.type === 'radio') {
-        const questionDiv = event.target.closest('.question');
-        questionDiv.style.borderLeft = '4px solid #38a169';
-        questionDiv.style.background = '#f0fff4';
+    if (event.target.type === 'radio' && event.target.closest('.candidate-option')) {
+        const awardCard = event.target.closest('.award-card');
         
-        // Reset other options in the same question
-        const questionName = event.target.name;
-        const allOptions = document.querySelectorAll(`input[name="${questionName}"]`);
-        allOptions.forEach(radio => {
-            const optionLabel = radio.closest('.option');
-            if (radio !== event.target) {
-                optionLabel.style.borderColor = '#e2e8f0';
-                optionLabel.style.background = 'white';
-            } else {
-                optionLabel.style.borderColor = '#38a169';
-                optionLabel.style.background = '#f0fff4';
-            }
-        });
+        // Mark the card as answered
+        awardCard.classList.remove('unanswered');
+        awardCard.classList.add('answered');
+        
+        // Clear the form message if it was showing an error
+        if (formMessage && formMessage.textContent.includes('Please select')) {
+            formMessage.style.display = 'none';
+            formMessage.textContent = '';
+        }
     }
 });
