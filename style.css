@@ -1418,6 +1418,8 @@ footer {
     
     .carousel-track {
         gap: 0;
+        justify-content: center;
+        align-items: center;
     }
     
     .experience-tabs {
