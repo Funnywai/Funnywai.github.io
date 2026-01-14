@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Remix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grain"></div>
+    <header class="top-bar">
+        <div class="brand">Wordle Remix</div>
+        <button class="reset" id="resetBtn" aria-label="Start a new puzzle">New Game</button>
+    </header>
+
+    <main class="layout">
+        <section class="panel">
+            <div class="intro">
+                <h1>Guess the five letter word</h1>
+                <p>Six tries. Colors tell you how close you are: green is correct, gold is present, slate is absent.</p>
+            </div>
+            <div class="board" id="board" aria-label="Word grid"></div>
+            <div class="message" id="message" role="status" aria-live="polite"></div>
+            <div class="keyboard" id="keyboard" aria-label="On-screen keyboard"></div>
+        </section>
+
+        <aside class="tips">
+            <h2>How to play</h2>
+            <ul>
+                <li>Type with your keyboard or tap the on-screen keys.</li>
+                <li>Press Enter to submit. Backspace deletes.</li>
+                <li>Each letter can appear more than once. Use the colors to narrow it down.</li>
+                <li>Hit New Game anytime for a fresh word.</li>
+            </ul>
+        </aside>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
