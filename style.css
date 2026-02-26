@@ -1411,19 +1411,13 @@ footer {
         gap: 40px;
     }
     
-    .projects-carousel {
-        overflow: hidden;
-    }
-    
     .project-card {
-        flex: 0 0 calc(100vw - 48px);
-        min-width: calc(100vw - 48px);
-        max-width: calc(100vw - 48px);
+        flex: 0 0 100%;
+        min-width: 100%;
     }
     
     .carousel-track {
-        gap: 24px;
-        padding-left: 0;
+        gap: 0;
     }
     
     .experience-tabs {
@@ -1468,16 +1462,6 @@ footer {
     
     .tech-badges {
         justify-content: center;
-    }
-    
-    .project-card {
-        flex: 0 0 calc(100vw - 32px);
-        min-width: calc(100vw - 32px);
-        max-width: calc(100vw - 32px);
-    }
-    
-    .carousel-track {
-        gap: 16px;
     }
     
     .footer-bottom {
