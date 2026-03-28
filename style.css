@@ -57,6 +57,7 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    overflow-x: hidden;
 }
 
 body {
@@ -922,6 +923,7 @@ section {
     flex: 0 0 calc(33.333% - 20px);
     min-width: 320px;
     perspective: 1000px;
+    position: relative;
 }
 
 .card-inner {
@@ -1333,6 +1335,23 @@ footer {
     to { opacity: 1; transform: translateX(0); }
 }
 
+/* ============== TAP-TO-FLIP (touch devices) ============== */
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Tap hint overlay for touch devices */
+.tap-hint {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 2;
+}
+
 /* ============== RESPONSIVE ============== */
 @media (max-width: 1024px) {
     .stats-grid {
@@ -1359,7 +1378,7 @@ footer {
 
 @media (max-width: 768px) {
     :root {
-        --section-padding: 80px;
+        --section-padding: 70px;
     }
     
     .nav-links {
@@ -1370,12 +1389,14 @@ footer {
         bottom: 0;
         background: rgba(10, 15, 28, 0.98);
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 20px;
         transform: translateX(100%);
         transition: transform 0.5s var(--ease-out-expo);
+        z-index: 999;
     }
     
     .nav-links.active {
@@ -1385,12 +1406,15 @@ footer {
     .nav-link {
         font-size: 1.5rem;
         padding: 15px 30px;
+        -webkit-tap-highlight-color: transparent;
     }
     
     .mobile-menu-btn {
         display: flex;
         align-items: center;
         justify-content: center;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
     
     .stats-grid {
@@ -1411,13 +1435,37 @@ footer {
         gap: 40px;
     }
     
+    /* Override browser default min-width to allow flex item to shrink to container */
     .project-card {
         flex: 0 0 100%;
-        min-width: 100%;
+        min-width: 0;
+        width: 100%;
     }
     
     .carousel-track {
         gap: 0;
+    }
+
+    /* Clip off-screen cards to prevent horizontal scrollbar */
+    .projects-carousel {
+        overflow: hidden;
+    }
+
+    /* On touch devices show the tap hint and disable hover flip */
+    .touch-device .project-card:hover .card-inner {
+        transform: none;
+    }
+    .touch-device .tap-hint {
+        display: block;
+    }
+    
+    /* Card height adapts on mobile */
+    .card-inner {
+        height: 420px;
+    }
+
+    .card-back {
+        padding: 24px;
     }
     
     .experience-tabs {
@@ -1429,44 +1477,190 @@ footer {
         width: 100%;
         max-width: 250px;
         justify-content: center;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    /* Disable parallax shift on mobile hero */
+    .hero-content {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    /* Better hero spacing */
+    .hero {
+        padding: 90px 0 60px;
+        min-height: 100svh;
+    }
+
+    /* Scroll indicator: hide on mobile to save vertical space */
+    .hero-scroll {
+        display: none;
+    }
+
+    /* About image: smaller on tablet */
+    .image-frame {
+        max-width: 220px;
+    }
+
+    /* Timeline card adjustments */
+    .timeline-card {
+        padding: 20px;
     }
 }
 
 @media (max-width: 480px) {
+    :root {
+        --section-padding: 56px;
+    }
+
     .container {
         padding: 0 16px;
     }
     
     .hero-name {
-        font-size: 2rem;
+        font-size: clamp(1.8rem, 9vw, 2.4rem);
     }
     
+    .hero-greeting {
+        font-size: 1rem;
+    }
+
     .hero-tagline {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
     }
     
     .hero-cta {
         flex-direction: column;
         align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
     }
     
     .btn {
         width: 100%;
         max-width: 280px;
         justify-content: center;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .hero-badge {
+        font-size: 0.8rem;
+        padding: 6px 14px;
+        margin-bottom: 20px;
     }
     
     .stats-grid {
         grid-template-columns: 1fr;
     }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
     
     .tech-badges {
         justify-content: center;
+    }
+
+    .tech-badge {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    /* Footer contact email: allow wrapping */
+    .contact-link span {
+        overflow-wrap: break-word;
+        word-break: break-word;
+        font-size: 0.85rem;
+    }
+
+    .footer-main {
+        gap: 32px;
     }
     
     .footer-bottom {
         flex-direction: column;
         gap: 20px;
         text-align: center;
+    }
+
+    /* Timeline adjustments */
+    .timeline-item {
+        padding-left: 48px;
+    }
+
+    .timeline-card h3 {
+        font-size: 1.05rem;
+    }
+
+    /* Carousel card back padding */
+    .card-back {
+        padding: 20px;
+    }
+
+    .card-back h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Carousel controls */
+    .carousel-btn {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Very small phones (≤ 360px) */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .hero-name {
+        font-size: 1.7rem;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .about-content h3 {
+        font-size: 1.4rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .timeline-card {
+        padding: 16px;
+    }
+
+    .card-back {
+        padding: 16px;
+    }
+
+    .footer-brand p {
+        font-size: 0.9rem;
+    }
+
+    .copyright p {
+        font-size: 0.8rem;
     }
 }
