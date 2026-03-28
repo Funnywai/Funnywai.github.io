@@ -413,13 +413,14 @@ function initExperienceTabs() {
 
 // ============== PROJECTS CAROUSEL ==============
 function initProjectsCarousel() {
+    const carousel = document.getElementById('projectsCarousel');
     const track = document.getElementById('carouselTrack');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dots = document.querySelectorAll('.dot');
     const cards = document.querySelectorAll('.project-card');
     
-    if (!track || cards.length === 0) return;
+    if (!carousel || !track || cards.length === 0) return;
     
     let currentIndex = 0;
     let isDragging = false;
@@ -429,6 +430,12 @@ function initProjectsCarousel() {
     let velocity = 0;
     let lastX = 0;
     let lastTime = 0;
+
+    function getMaxIndex() {
+        return window.innerWidth <= 768 ? cards.length - 1 :
+               window.innerWidth <= 1024 ? cards.length - 2 :
+               Math.max(0, cards.length - 3);
+    }
     
     function getSlideStep() {
         if (cards.length < 2) {
@@ -438,15 +445,33 @@ function initProjectsCarousel() {
         const step = cards[1].offsetLeft - cards[0].offsetLeft;
         return step > 0 ? step : cards[0].offsetWidth;
     }
+
+    function getMobileCenteredTranslate(index) {
+        const card = cards[index];
+        if (!card) return 0;
+
+        const viewportWidth = carousel.clientWidth;
+        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+        const target = (viewportWidth / 2) - cardCenter;
+        const minTranslate = Math.min(0, viewportWidth - track.scrollWidth);
+
+        return Math.max(minTranslate, Math.min(0, target));
+    }
+
+    function getTrackTranslateForIndex(index) {
+        if (window.innerWidth <= 768) {
+            return getMobileCenteredTranslate(index);
+        }
+
+        const slideStep = getSlideStep();
+        return -index * slideStep;
+    }
     
     function goToSlide(index) {
-        const maxIndex = window.innerWidth <= 768 ? cards.length - 1 : 
-                         window.innerWidth <= 1024 ? cards.length - 2 : 
-                         Math.max(0, cards.length - 3);
+        const maxIndex = getMaxIndex();
         
         currentIndex = Math.max(0, Math.min(index, maxIndex));
-        const slideStep = getSlideStep();
-        currentTranslate = -currentIndex * slideStep;
+        currentTranslate = getTrackTranslateForIndex(currentIndex);
         prevTranslate = currentTranslate;
         
         track.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
@@ -512,12 +537,31 @@ function initProjectsCarousel() {
         if (!isDragging) return;
         isDragging = false;
         
-        const slideStep = getSlideStep();
         const moved = currentTranslate - prevTranslate;
         
         // Apply velocity-based momentum
         const momentum = velocity * 100;
         const totalMoved = moved + momentum;
+
+        if (window.innerWidth <= 768) {
+            const projectedTranslate = currentTranslate + momentum;
+            const maxIndex = getMaxIndex();
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+
+            for (let index = 0; index <= maxIndex; index++) {
+                const distance = Math.abs(getTrackTranslateForIndex(index) - projectedTranslate);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            }
+
+            goToSlide(closestIndex);
+            return;
+        }
+        
+        const slideStep = getSlideStep();
         
         // Determine slide direction based on movement + momentum
         if (totalMoved < -slideStep * 0.2) {
@@ -690,6 +734,7 @@ function initTapToFlip() {
     
     cards.forEach(card => {
         const inner = card.querySelector('.card-inner');
+        const image = card.querySelector('.project-image');
         if (!inner) return;
 
         // Visual tap-hint (hidden from assistive technologies — it's decorative)
@@ -707,19 +752,31 @@ function initTapToFlip() {
         let touchStartX = 0;
         let touchStartY = 0;
 
+        const toggleFlip = () => {
+            const isFlipped = inner.classList.toggle('flipped');
+            inner.setAttribute('aria-pressed', String(isFlipped));
+            hint.textContent = isFlipped ? 'Tap to close' : 'Tap to flip';
+        };
+
+        image?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFlip();
+        });
+
         card.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
         }, { passive: true });
 
         card.addEventListener('touchend', (e) => {
+            if (e.target.closest('a, button')) return;
+
             const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
             const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
             // Only flip on a tap, not on a swipe/drag
             if (dx < SWIPE_THRESHOLD && dy < SWIPE_THRESHOLD) {
-                const isFlipped = inner.classList.toggle('flipped');
-                inner.setAttribute('aria-pressed', String(isFlipped));
-                hint.textContent = isFlipped ? 'Tap to close' : 'Tap to flip';
+                toggleFlip();
             }
         }, { passive: true });
     });

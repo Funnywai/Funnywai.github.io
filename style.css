@@ -1437,13 +1437,13 @@ footer {
     
     /* Override browser default min-width to allow flex item to shrink to container */
     .project-card {
-        flex: 0 0 100%;
+        flex: 0 0 calc(100% - 12px);
         min-width: 0;
-        width: 100%;
+        width: auto;
     }
     
     .carousel-track {
-        gap: 0;
+        gap: 12px;
     }
 
     /* Clip off-screen cards to prevent horizontal scrollbar */
@@ -1455,6 +1455,16 @@ footer {
     .touch-device .project-card:hover .card-inner {
         transform: none;
     }
+
+    .touch-device .project-overlay {
+        opacity: 1;
+        background: rgba(99, 102, 241, 0.65);
+    }
+
+    .touch-device .project-image {
+        cursor: pointer;
+    }
+
     .touch-device .tap-hint {
         display: block;
     }
