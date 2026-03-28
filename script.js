@@ -430,11 +430,13 @@ function initProjectsCarousel() {
     let lastX = 0;
     let lastTime = 0;
     
-    function getCardWidth() {
-        const card = cards[0];
-        const style = window.getComputedStyle(track);
-        const gap = parseInt(style.gap) || 30;
-        return card.offsetWidth + gap;
+    function getSlideStep() {
+        if (cards.length < 2) {
+            return cards[0].offsetWidth;
+        }
+
+        const step = cards[1].offsetLeft - cards[0].offsetLeft;
+        return step > 0 ? step : cards[0].offsetWidth;
     }
     
     function goToSlide(index) {
@@ -443,8 +445,8 @@ function initProjectsCarousel() {
                          Math.max(0, cards.length - 3);
         
         currentIndex = Math.max(0, Math.min(index, maxIndex));
-        const cardWidth = getCardWidth();
-        currentTranslate = -currentIndex * cardWidth;
+        const slideStep = getSlideStep();
+        currentTranslate = -currentIndex * slideStep;
         prevTranslate = currentTranslate;
         
         track.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
@@ -510,7 +512,7 @@ function initProjectsCarousel() {
         if (!isDragging) return;
         isDragging = false;
         
-        const cardWidth = getCardWidth();
+        const slideStep = getSlideStep();
         const moved = currentTranslate - prevTranslate;
         
         // Apply velocity-based momentum
@@ -518,9 +520,9 @@ function initProjectsCarousel() {
         const totalMoved = moved + momentum;
         
         // Determine slide direction based on movement + momentum
-        if (totalMoved < -cardWidth * 0.2) {
+        if (totalMoved < -slideStep * 0.2) {
             goToSlide(currentIndex + 1);
-        } else if (totalMoved > cardWidth * 0.2) {
+        } else if (totalMoved > slideStep * 0.2) {
             goToSlide(currentIndex - 1);
         } else {
             goToSlide(currentIndex);
@@ -539,6 +541,8 @@ function initProjectsCarousel() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => goToSlide(currentIndex), 100);
     });
+
+    goToSlide(0);
 }
 
 // ============== FOOTER CANVAS - FLOWING LINES ==============
