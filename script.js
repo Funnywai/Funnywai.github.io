@@ -6,9 +6,6 @@
 // ============== TOUCH DETECTION ==============
 const IS_TOUCH_DEVICE = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-// Tap-to-flip swipe detection threshold (px)
-const SWIPE_THRESHOLD = 10;
-
 // ============== INITIALIZATION ==============
 document.addEventListener('DOMContentLoaded', () => {
     // Flag the <body> so CSS can target touch devices
@@ -26,9 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectsCarousel();
     initFooterCanvas();
     initBackToTop();
-    if (IS_TOUCH_DEVICE) {
-        initTapToFlip();
-    }
 });
 
 // ============== CURSOR GLOW EFFECT ==============
@@ -727,57 +721,3 @@ window.addEventListener('load', () => {
         }, 100 * index);
     });
 });
-
-// ============== TAP-TO-FLIP (touch devices) ==============
-function initTapToFlip() {
-    const cards = document.querySelectorAll('.project-card');
-    
-    cards.forEach(card => {
-        const inner = card.querySelector('.card-inner');
-        const image = card.querySelector('.project-image');
-        if (!inner) return;
-
-        // Visual tap-hint (hidden from assistive technologies — it's decorative)
-        const hint = document.createElement('div');
-        hint.className = 'tap-hint';
-        hint.setAttribute('aria-hidden', 'true');
-        hint.textContent = 'Tap to flip';
-        card.appendChild(hint);
-
-        // Make the card tabbable and announce flipped state
-        inner.setAttribute('role', 'button');
-        inner.setAttribute('aria-pressed', 'false');
-        inner.setAttribute('tabindex', '0');
-
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        const toggleFlip = () => {
-            const isFlipped = inner.classList.toggle('flipped');
-            inner.setAttribute('aria-pressed', String(isFlipped));
-            hint.textContent = isFlipped ? 'Tap to close' : 'Tap to flip';
-        };
-
-        image?.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleFlip();
-        });
-
-        card.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        card.addEventListener('touchend', (e) => {
-            if (e.target.closest('a, button')) return;
-
-            const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
-            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-            // Only flip on a tap, not on a swipe/drag
-            if (dx < SWIPE_THRESHOLD && dy < SWIPE_THRESHOLD) {
-                toggleFlip();
-            }
-        }, { passive: true });
-    });
-}
