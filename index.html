@@ -176,9 +176,11 @@
                     <div class="stat-icon">
                         <i class="fas fa-code-branch"></i>
                     </div>
-                    <div class="stat-number" data-count="3">0</div>
+                    <div class="stat-number" data-count="5">0</div>
                     <div class="stat-label">Projects Completed</div>
                     <div class="stat-icons">
+                        <i class="fas fa-folder-open"></i>
+                        <i class="fas fa-folder-open"></i>
                         <i class="fas fa-folder-open"></i>
                         <i class="fas fa-folder-open"></i>
                         <i class="fas fa-folder-open"></i>
@@ -227,7 +229,7 @@
                             <ul class="timeline-details">
                                 <li>Latest GPA: 3.319</li>
                                 <li>CGPA: 3.377</li>
-                                <li>Focus: Software Development & Data Science</li>
+                                <li>Focus: Software Development</li>
                             </ul>
                         </div>
                     </div>
@@ -308,7 +310,7 @@
                                 <div class="project-image">
                                     <img src="Picture/HKCulturalEvents.png" alt="HK Cultural Events">
                                     <div class="project-overlay">
-                                        <span class="view-project">View Details</span>
+                                        <a href="https://csci-2720-project-eight.vercel.app/" target="_blank" rel="noopener noreferrer" class="view-project">View Project</a>
                                     </div>
                                 </div>
                                 <div class="project-content">
@@ -353,7 +355,7 @@
                                 <div class="project-image">
                                     <img src="Picture/concert.png" alt="Concert Tracker">
                                     <div class="project-overlay">
-                                        <span class="view-project">View Details</span>
+                                        <a href="https://concert-tracker-woad.vercel.app/" target="_blank" rel="noopener noreferrer" class="view-project">View Project</a>
                                     </div>
                                 </div>
                                 <div class="project-content">
@@ -390,6 +392,51 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="project-card" data-index="2">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <img src="Picture/ToDoList.png" alt="ToDoList App">
+                                    <div class="project-overlay">
+                                        <a href="ToDoList/" class="view-project">View Project</a>
+                                    </div>
+                                </div>
+                                <div class="project-content">
+                                    <h3>ToDoList</h3>
+                                    <p>Simple and responsive task manager with local storage and filter views.</p>
+                                    <div class="project-tech">
+                                        <span>Vue.js</span>
+                                        <span>Firebase</span>
+                                        <span>Vercel</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>ToDoList App</h3>
+                                <p>A focused to-do experience with add/delete actions, completion tracking, status filtering, and persistent browser storage.</p>
+                                <div class="project-features">
+                                    <div class="feature">
+                                        <i class="fas fa-list-check"></i>
+                                        <span>Task Filtering</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-hard-drive"></i>
+                                        <span>Local Storage</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <span>Responsive Layout</span>
+                                    </div>
+                                </div>
+                                <a href="https://to-do-list-8aa8108a8-funnywais-projects.vercel.app" class="btn btn-primary">
+                                    <span>View Project</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Carousel Controls -->
@@ -400,6 +447,7 @@
                     <div class="carousel-dots" id="carouselDots">
                         <button class="dot active" data-index="0"></button>
                         <button class="dot" data-index="1"></button>
+                        <button class="dot" data-index="2"></button>
                     </div>
                     <button class="carousel-btn next" id="nextBtn" aria-label="Next project">
                         <i class="fas fa-chevron-right"></i>
