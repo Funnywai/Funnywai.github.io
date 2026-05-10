@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Serve site (http.server)",
+			"type": "shell",
+			"command": "C:/Users/User/AppData/Local/Programs/Python/Python314/python.exe",
+			"args": [
+				"-m",
+				"http.server",
+				"5500"
+			],
+			"isBackground": true
+		}
+	]
+}
